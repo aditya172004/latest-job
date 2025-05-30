@@ -1,11 +1,11 @@
 import { Webhook } from "svix";
 import User from "../models/User.js";
 
-// API Controller function to manage Clerk User with Database
+// API Controller Function to Manage Clerk User with database
 export const clerkWebhooks = async (req, res) => {
     try {
 
-        // create a svix instance with Clerk Webhook secret
+        // Create a Svix instance with clerk webhook secret.
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
 
         // Verifying Headers
@@ -15,12 +15,13 @@ export const clerkWebhooks = async (req, res) => {
             "svix-signature": req.headers["svix-signature"]
         })
 
-        //Getting data from request Body
-        const { data, type } = req.body;
+        // Getting Data from request body
+        const { data, type } = req.body
 
-        // Switch case for different Events
+        // Switch Cases for differernt Events
         switch (type) {
             case 'user.created': {
+
                 const userData = {
                     _id: data.id,
                     email: data.email_addresses[0].email_address,
@@ -39,24 +40,22 @@ export const clerkWebhooks = async (req, res) => {
                     name: data.first_name + " " + data.last_name,
                     image: data.image_url,
                 }
-                await User.findByIdAndUpdate(data.id, userData);
+                await User.findByIdAndUpdate(data.id, userData)
                 res.json({})
                 break;
             }
 
             case 'user.deleted': {
-                await User.findByIdAndDelete(data.id);
+                await User.findByIdAndDelete(data.id)
                 res.json({})
                 break;
             }
-
             default:
                 break;
         }
 
-
     } catch (error) {
-        console.log(error.message);
-        res.json({ success: false, message: "Webhooks Error" });
+        res.json({ success: false, message: error.message })
     }
 }
+// MONGO_URL = "mongodb+srv://linasubi73:SNeK8iXVdZJnxJev@my-job-portal.lcrshbt.mongodb.net"
