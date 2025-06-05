@@ -12,7 +12,16 @@ const Navbar = () => {
 
     const navigate = useNavigate();
 
-    const { setShowRecruiterLogin } = useContext(AppContext);
+    const { setShowRecruiterLogin, companyToken, companyData } = useContext(AppContext);
+
+    const onClickHandler = async () => {
+        if (!companyData) {
+            setShowRecruiterLogin(true);
+        }
+        else {
+            navigate('/dashboard/manage-jobs');
+        }
+    }
 
     return (
         <div className='shadow py-4'>
@@ -27,7 +36,7 @@ const Navbar = () => {
                             <UserButton />
                         </div> :
                         <div className='flex gap-4 max-sm:text-xs'>
-                            <button onClick={e => setShowRecruiterLogin(true)} className='text-gray-600'>Recruiter Login</button>
+                            <button onClick={onClickHandler} className='text-gray-600'>Recruiter Login</button>
                             <button onClick={e => openSignIn()} className='bg-blue-600 text-white px-6 sm:px-9 py-2 rounded-full'>Login</button>
                         </div>
                 }

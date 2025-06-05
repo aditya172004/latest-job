@@ -1,9 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
 import { AppContext } from '../context/AppContext'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const RecruiterLogin = () => {
 
+    const navigate = useNavigate()
     const [state, setState] = useState('Login')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -13,14 +17,58 @@ const RecruiterLogin = () => {
 
     const [isTextDataSubmitted, setIsTextDataSubmitted] = useState(false);
 
-    const { setShowRecruiterLogin } = useContext(AppContext);
+    const { setShowRecruiterLogin, backendUrl, setCompanyToken, setCompanyData } = useContext(AppContext);
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
 
         if (state === "Sign Up" && !isTextDataSubmitted) {
             setIsTextDataSubmitted(true);
+            return;
         }
+
+        try {
+            if (state === 'Login') {
+                const { data } = await axios.post(backendUrl + '/api/company/login', {
+                    email, password
+                })
+
+                if (data.success) {
+                    setCompanyData(data.company);
+                    setCompanyToken(data.token);
+                    localStorage.setItem('companyToken', data.token);
+                    setShowRecruiterLogin(false);
+                    navigate('/dashboard/manage-jobs');
+                    toast.success("Logged In Successfully");
+                } else {
+                    toast.error(data.message);
+                }
+
+            } else {
+                const formData = new FormData()
+                formData.append('name', name)
+                formData.append('password', password)
+                formData.append('email', email)
+                formData.append('image', image)
+
+                const { data } = await axios.post(backendUrl + '/api/company/register', formData);
+
+                if (data.success) {
+                    // console.log(data);
+                    setCompanyData(data.company);
+                    setCompanyToken(data.token);
+                    localStorage.setItem('companyToken', data.token);
+                    setShowRecruiterLogin(false);
+                    navigate('/dashboard/manage-jobs');
+                } else {
+                    setIsTextDataSubmitted(false);
+                    toast.error(data.message);
+                }
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+
     }
 
     useEffect(() => {
@@ -29,7 +77,7 @@ const RecruiterLogin = () => {
         return () => {
             document.body.style.overflow = 'unset'
         }
-    },[])
+    }, [])
 
 
     return (
@@ -57,11 +105,11 @@ const RecruiterLogin = () => {
                         )}
                         <div className='border px-4 py-2 flex items-center gap-2 rounded-full mt-5'>
                             <img src={assets.email_icon} alt="" />
-                            <input className='outline-none tetx-sm' onChange={e => setEmail(e.target.value)} value={email} type="temail" placeholder='Email Id' required />
+                            <input className='outline-none tetx-sm' onChange={e => setEmail(e.target.value)} value={email} type="email" placeholder='Email Id' required />
                         </div>
                         <div className='border px-4 py-2 flex items-center gap-2 rounded-full mt-5'>
                             <img src={assets.lock_icon} alt="" />
-                            <input className='outline-none tetx-sm' onChange={e => setPassword(e.target.value)} value={name} type="password" placeholder='Password' required />
+                            <input className='outline-none text-sm' onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder='Password' required />
                         </div>
 
                     </>
