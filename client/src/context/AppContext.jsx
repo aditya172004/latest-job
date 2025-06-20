@@ -43,7 +43,7 @@ export const AppContextProvider = (props) => {
 
             if (data.success) {
                 setJobs(data.jobs);
-                console.log(data.jobs);
+                // console.log(data.jobs);
             } else {
                 toast.error(data.message);
             }
@@ -66,7 +66,7 @@ export const AppContextProvider = (props) => {
 
             if (data.success) {
                 setCompanyData(data.company);
-                console.log(data);
+                // console.log(data);
                 // navigate('/dashboard/manage-jobs');
             }
         } catch (error) {
@@ -105,7 +105,7 @@ export const AppContextProvider = (props) => {
             const { data } = await axios.get(backendUrl + '/api/users/applications', {
                 headers: { Authorization: `Bearer ${token}` }
             })
-            console.log("data inside AppContext.jsx 105", data);
+            // console.log("data inside AppContext.jsx 105", data);
             if (data.success) {
                 setUserApplications(data.applications);
             }
