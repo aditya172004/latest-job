@@ -42,7 +42,7 @@ const Dashboard = () => {
                             alt=""
                         />
                         {/* <span className='text-blue-900 px-2 py-1 rounded font-bold text-[24px] leading-[32px] tracking-wider w-[120px] h-[40px] inline-block text-center'>JobNova</span> */}
-                        <span className='text-blue-900 px-1 py-1 rounded font-bold text-[30px] leading-[35px]  w-[150px] h-[40px] inline-block text-center'>JobNova</span>
+                        <span onClick={() => navigate("/")} className='cursor-pointer text-blue-900 px-1 py-1 rounded font-bold text-[30px] leading-[35px]  w-[150px] h-[40px] inline-block text-center'>JobNova</span>
                     </div>
                     {
                         companyData &&
