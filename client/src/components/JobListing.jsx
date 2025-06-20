@@ -38,7 +38,7 @@ const JobListing = () => {
         const matchesTitle = job => searchFilter.title === "" || job.title.toLowerCase().includes(searchFilter.title.toLowerCase())
 
         const matchesSearchLocation = job => searchFilter.location === "" || job.location.toLowerCase().includes(searchFilter.location.toLowerCase());
-        console.log("SearchFilter changed so page re rendered");
+        // console.log("SearchFilter changed so page re rendered");
         const newFilteredJobs = jobs.slice().reverse().filter(
             job => matchesCategory(job) && matchesLocation(job) && matchesTitle(job) && matchesSearchLocation(job)
         )
