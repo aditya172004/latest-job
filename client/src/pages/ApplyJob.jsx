@@ -18,6 +18,7 @@ const ApplyJob = () => {
   const { getToken } = useAuth();
   const navigate = useNavigate()
 
+  const [isLoading, setisLoading] = useState(false);
   const [JobData, setJobData] = useState(null);
 
   const [isAlreadyApplied, setIsAlreadyApplied] = useState(false);
@@ -41,7 +42,7 @@ const ApplyJob = () => {
 
   const applyHandler = async () => {
     try {
-
+      setisLoading(true);
       if (!userData) {
         return toast.error('Login to apply for jobs');
       }
@@ -64,12 +65,15 @@ const ApplyJob = () => {
       if (data.success) {
         fetchUserApplications();
         toast.success(data.message);
-
+        setIsAlreadyApplied(true);
       } else {
         toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
+    }
+    finally {
+      setisLoading(false);
     }
   }
 
@@ -123,7 +127,8 @@ const ApplyJob = () => {
             </div>
 
             <div className='flex flex-col justify-center text-end text-sm max-md:mx-auto max-md:text-center'>
-              <button onClick={applyHandler} className='bg-blue-600 p-2.5 px-10 text-white rounded'>{isAlreadyApplied ? 'Already Applied' : 'Apply Now'}</button>
+              <button onClick={applyHandler} disabled={isLoading || isAlreadyApplied} className={`cursor-pointer bg-blue-600 p-2.5 px-10 text-white rounded mt-10 ${(isLoading || isAlreadyApplied) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500'
+                }`}>{isLoading ? 'Applying...' : (isAlreadyApplied ? 'Already Applied' : 'Apply Now')}</button>
               <p className='mt-1 text-gray-600'>Posted {moment(JobData.date).fromNow()}</p>
             </div>
 
@@ -135,7 +140,8 @@ const ApplyJob = () => {
               <div className='rich-text' dangerouslySetInnerHTML={{ __html: JobData.description }}>
 
               </div>
-              <button onClick={applyHandler} className='bg-blue-600 p-2.5 px-10 text-white rounded mt-10'>{isAlreadyApplied ? 'Already Applied' : 'Apply Now'}</button>
+              <button onClick={applyHandler} disabled={isLoading || isAlreadyApplied} className={`cursor-pointer bg-blue-600 p-2.5 px-10 text-white rounded mt-10 ${(isLoading || isAlreadyApplied) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500'
+                }`}>{isLoading ? 'Applying...' : (isAlreadyApplied ? 'Already Applied' : 'Apply Now')}</button>
             </div>
             {/* Right Section More Jobs */}
             <div className='w-full lg:w-1/3 mt-8 lg:mt-0 lg:ml-8 space-y-5'>

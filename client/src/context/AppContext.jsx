@@ -18,6 +18,7 @@ export const AppContextProvider = (props) => {
         location: ''
     });
 
+    const [isLoading, setisLoading] = useState(false);
     const [isSearched, setIsSearched] = useState(false)
 
     const [jobs, setJobs] = useState([]);
@@ -37,7 +38,7 @@ export const AppContextProvider = (props) => {
     const fetchJobs = async () => {
         // setJobs(jobsData)
         try {
-
+            setisLoading(true);
             const { data } = await axios.get(backendUrl + '/api/jobs');
 
             if (data.success) {
@@ -49,7 +50,9 @@ export const AppContextProvider = (props) => {
 
         } catch (error) {
             toast.error(error.message);
-        }
+        } finally {
+            setisLoading(false);
+        } 
     }
 
     //Function to fetch company data
@@ -165,6 +168,8 @@ export const AppContextProvider = (props) => {
         setUserData, setUserApplications,
         fetchUserData,
         fetchUserApplications,
+        isLoading,
+        setisLoading
     }
 
     return (<AppContext.Provider value={value}>

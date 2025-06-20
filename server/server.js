@@ -18,10 +18,11 @@ import morgan from 'morgan';
 await connectDB();
 await connectCloudinary();
 
+app.use(morgan('dev'));
 app.use(cors())
 app.use(express.json())
 app.use(clerkMiddleware());
-app.use(morgan('common'));
+
 
 app.get('/', (req,res) => res.send("API Working"));
 // app.get("/debug-sentry", function mainHandler(req, res) {

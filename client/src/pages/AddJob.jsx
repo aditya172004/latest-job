@@ -84,7 +84,7 @@ const AddJob = () => {
             <div className='flex flex-col sm:flex-row gap-2 w-full sm:gap-8'>
                 <div>
                     <p className='mb-2'>Job Category</p>
-                    <select className='w-full px-3 py-2 border-2 border-gray-300 rounded' onChange={e => setCategory(e.target.value)}>
+                    <select className='cursor-pointer w-full px-3 py-2 border-2 border-gray-300 rounded' onChange={e => setCategory(e.target.value)}>
                         {JobCategories.map((category, index) => (
                             <option key={index} value={category}>{category}</option>
                         ))}
@@ -92,7 +92,7 @@ const AddJob = () => {
                 </div>
                 <div>
                     <p className='mb-2'>Job Location</p>
-                    <select className='w-full px-3 py-2 border-2 border-gray-300 rounded' onChange={e => setLocation(e.target.value)}>
+                    <select className='cursor-pointer w-full px-3 py-2 border-2 border-gray-300 rounded' onChange={e => setLocation(e.target.value)}>
                         {JobLocations.map((location, index) => (
                             <option key={index} value={location}>{location}</option>
                         ))}
@@ -100,7 +100,7 @@ const AddJob = () => {
                 </div>
                 <div>
                     <p className='mb-2'>Job Level</p>
-                    <select className='w-full px-3 py-2 border-2 border-gray-300 rounded' onChange={e => setLevel(e.target.value)}>
+                    <select className='cursor-pointer w-full px-3 py-2 border-2 border-gray-300 rounded' onChange={e => setLevel(e.target.value)}>
                         <option value="Begineer level">Beginner Level</option>
                         <option value="Intermediate level">Intermediate Level</option>
                         <option value="Senior level">Senior Level</option>
@@ -112,7 +112,7 @@ const AddJob = () => {
                 <p className='mb-2'>Job Salary in (CTC)</p>
                 <input min={0} className='w-full px-3 py-2 border-2 border-gray-300 rounded sm:w-[120px]' onChange={e => setSalary(e.target.value)} type="Number" placeholder='2500' />
             </div>
-            <button className='w-28 py-3 mt-4 bg-black text-white rounded'>ADD</button>
+            <button className='cursor-pointer w-28 py-3 mt-4 bg-black text-white rounded'>ADD</button>
         </form>
     )
 }

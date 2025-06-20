@@ -96,7 +96,7 @@ const ManageJobs = () => {
                                 <td className='py-2 px-4 border-b max-sm:hidden'>{job.location}</td>
                                 <td className='py-2 px-4 border-b text-center'>{job.applicants}</td>
                                 <td className='py-2 px-4 border-b'>
-                                    <input onChange={() => changeJobVisibility(job._id)} className='scale-125 ml-4' type="checkbox" checked={job.visible} />
+                                    <input onChange={() => changeJobVisibility(job._id)} className='cursor-pointer scale-125 ml-4' type="checkbox" checked={job.visible} />
                                 </td>
                             </tr>
                         ))}
@@ -104,7 +104,7 @@ const ManageJobs = () => {
                 </table>
             </div>
             <div className='mt-4 flex justify-end'>
-                <button onClick={() => navigate('/dashboard/add-job')} className='bg-black text-white py-2 px-4 rounded'>Add new job</button>
+                <button onClick={() => navigate('/dashboard/add-job')} className='cursor-pointer bg-black text-white py-2 px-4 rounded'>Add new job</button>
             </div>
         </div>
     ) : 

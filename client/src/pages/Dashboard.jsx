@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { AppContext } from '../context/AppContext';
 import { toast } from 'react-toastify';
+// import { assets } from '../assets/assets';
 
 const Dashboard = () => {
 
@@ -24,21 +25,32 @@ const Dashboard = () => {
         if (companyData) {
             navigate('/dashboard/manage-jobs');
         }
-    },[companyData])
+    }, [companyData])
 
     return (
         <div className='min-h-screen'>
             {/* NavBar for recruiter panel */}
             <div className='shadow py-4'>
                 <div className='px-5 flex justify-between items-center'>
-                    <img onClick={e => navigate('/')} className='max-sm:w-32 cursor-pointer' src={assets.logo} alt="" />
+                    {/* <img onClick={e => navigate('/')} className='max-sm:w-32 cursor-pointer' src={assets.JobNova12} alt="" /> */}
+                    <div className='flex items-center gap-0.5'>
+                        <img
+                            onClick={() => navigate('/')}
+                            className='cursor-pointer'
+                            src={assets.JobNova12}
+                            style={{ height: '40px', width: '30px' }}
+                            alt=""
+                        />
+                        {/* <span className='text-blue-900 px-2 py-1 rounded font-bold text-[24px] leading-[32px] tracking-wider w-[120px] h-[40px] inline-block text-center'>JobNova</span> */}
+                        <span className='text-blue-900 px-1 py-1 rounded font-bold text-[30px] leading-[35px]  w-[150px] h-[40px] inline-block text-center'>JobNova</span>
+                    </div>
                     {
                         companyData &&
                         <div className='flex items-center gap-3'>
                             <p className='max-sm:hidden'>Welcome, {companyData.name}</p>
                             <div className='relative group'>
                                 <img className='w-8 border rounded-full' src={companyData.image} alt="" />
-                                <div className='absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12'>
+                                <div className='cursor-pointer absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12'>
                                     <ul className='list-none m-0 p-2 bg-white rounded-md border text-sm'>
                                         <li onClick={logout} className='py-1 px-2 cursor-pointer'>Logout</li>
                                     </ul>

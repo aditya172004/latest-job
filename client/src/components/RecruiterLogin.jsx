@@ -4,10 +4,12 @@ import { AppContext } from '../context/AppContext'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ClipLoader, FadeLoader } from 'react-spinners';
 
 const RecruiterLogin = () => {
 
     const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(false);
     const [state, setState] = useState('Login')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -28,6 +30,7 @@ const RecruiterLogin = () => {
         }
 
         try {
+            setIsLoading(true); // Start loading
             if (state === 'Login') {
                 const { data } = await axios.post(backendUrl + '/api/company/login', {
                     email, password
@@ -67,6 +70,8 @@ const RecruiterLogin = () => {
             }
         } catch (error) {
             toast.error(error.message);
+        } finally {
+            setIsLoading(false);
         }
 
     }
@@ -115,8 +120,11 @@ const RecruiterLogin = () => {
                     </>
                 }
                 {state === "Login" && <p className='text-sm text-blue-600 mt-4 my-4 cursor-pointer'>Forgot Password ?</p>}
-                <button type='submit' className='bg-blue-600 w-full text-white py-2 rounded-full mt-4'>
-                    {state === "Login" ? 'login' : isTextDataSubmitted ? 'Create Account' : "Next"}
+                <button type='submit' disabled={isLoading} className={`cursor-pointer hover:bg-blue-500 bg-blue-600 w-full text-white py-2 rounded-full mt-4 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''} `}>
+                    {state === "Login"
+                        ? (isLoading ? 'Logging in...' : 'Login')
+                        : (isTextDataSubmitted ? 'Create Account' : "Next")
+                    }
                 </button>
 
                 {
