@@ -63,6 +63,7 @@ const RecruiterLogin = () => {
                     localStorage.setItem('companyToken', data.token);
                     setShowRecruiterLogin(false);
                     navigate('/dashboard/manage-jobs');
+                    toast.success("Your company's account created successfully");
                 } else {
                     setIsTextDataSubmitted(false);
                     toast.error(data.message);
@@ -95,7 +96,13 @@ const RecruiterLogin = () => {
                     <>
                         <div className='flex items-center gap-4 my-10'>
                             <label htmlFor="image">
-                                <img className='w-16 rounded-full' src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
+                                <div className="inline-block rounded-full transition duration-200 hover:bg-blue-100 p-1">
+                                    <img
+                                        className='cursor-pointer w-16 rounded-full'
+                                        src={image ? URL.createObjectURL(image) : assets.upload_area}
+                                        alt=""
+                                    />
+                                </div>
                                 <input onChange={e => setImage(e.target.files[0])} type="file" id='image' hidden />
                             </label>
                             <p>Upload Company <br />Logo</p>
@@ -123,7 +130,7 @@ const RecruiterLogin = () => {
                 <button type='submit' disabled={isLoading} className={`cursor-pointer hover:bg-blue-500 bg-blue-600 w-full text-white py-2 rounded-full mt-4 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''} `}>
                     {state === "Login"
                         ? (isLoading ? 'Logging in...' : 'Login')
-                        : (isTextDataSubmitted ? 'Create Account' : "Next")
+                        : (isTextDataSubmitted ? (isLoading ? 'Creating Account': 'Create Account') : "Next")
                     }
                 </button>
 
